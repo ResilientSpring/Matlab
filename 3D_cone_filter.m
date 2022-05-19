@@ -195,7 +195,7 @@ Qp = wp * Qp / (Nsam_p + 1);
 %
 Qs = zeros(NH+1, NH+1);
 
-for iw = 0:Nsams
+for iw = 0:Nsam_p
     w = ws + iw * deltaw_pi;
     Qs = Qs + cos(w * NV) * (cos(w*NV))';
 end
@@ -251,3 +251,20 @@ axis([-1, 1, -1, 1, 0, 1.1]);
 xlabel('\omega_1/\pi');
 ylabel('\omega_2/\pi');
 zlabel('Magnitude response');
+%
+% Step 2:
+%
+t000 = t00 + t10 * r00;
+t100 = t10 * r10;
+t010 = t10 * r01;
+t001 = t01+t11*r00;
+t110 = t10 * r11;
+t101 = t11 * r10;
+t011 = t11 * r01;
+t111 = t11 * r11;
+%
+%
+F = zeros(3, 3, 3);
+F(1, 1, 1) = 0.125 * t111;
+F(1, 1, 2) = 0.25 * t110;
+F(1, 1, 3) = 0.125 * t111;
