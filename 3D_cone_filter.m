@@ -144,3 +144,32 @@ axis([-1, 1, -1, 1, 0, 1.1]);
 xlabel('\omega_{12}/\pi');
 ylabel('\omega_3/\pi');
 zlabel('Magnitude response');
+
+%
+% Step 2: Circular design
+%
+wr = wup;
+r = zeros(2, 1);
+Q = zeros(2, 2);
+
+for iw = 0:Nsamp
+    w1 = wr * cos(iw * deltaw_pih);
+    w2 = wr * sin(iw * deltaw_pih);
+    c = [1; 1-cos(w1)*cos(w2)];
+    r = r - 2 * (0.5 * cos(w1) + 0.5 * cos(w2))*c;
+    Q = Q + c * c';
+end
+
+r = r / (Nsamp + 1);
+Q = Q / (Nsamp + 1);
+T = -0.5 * inv(Q) * r;
+%
+%
+r11 = T(2);
+r00 = -r11;
+r10 = 0.5;
+r01 = 0.5;
+%
+% Design of prototype FIR lowpass filter
+%
+N_h = 2 * N + 1;
