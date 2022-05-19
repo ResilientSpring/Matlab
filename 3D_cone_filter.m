@@ -8,4 +8,8 @@
 clc;
 clear all;
 N = 20;
-theta = 70
+theta = 70;
+wt = 0.2 * pi;
+Nsamp = 200;
+%
+%
