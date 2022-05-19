@@ -35,6 +35,11 @@ for iw = 0:Nsamp
     r = r - 2 * cos(w1) * c;
     Q = Q + c * c';
 end
+r = r / (Nsamp + 1);
+Q = Q / (Nsamp + 1);
+T = -0.5 * inv(Q) * r;
+%
+%
 wc = acos(T(1));
 t11 = T(2);
 t01 = T(3);
