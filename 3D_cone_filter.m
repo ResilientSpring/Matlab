@@ -251,3 +251,16 @@ axis([-1, 1, -1, 1, 0, 1.1]);
 xlabel('\omega_1/\pi');
 ylabel('\omega_2/\pi');
 zlabel('Magnitude response');
+%
+% Step 2:
+%
+t000 = t00 + t10 * r00;
+t100 = t10 * r10;
+t010 = t10 * r01;
+t001 = t01+t11*r00;
+t110 = t10 * r11;
+t101 = t11 * r10;
+t011 = t11 * r01;
+t111 = t11 * r11;
+%
+%
