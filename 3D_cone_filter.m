@@ -141,3 +141,6 @@ YY = XX';
 subplot(2, 2, 2);
 plot3(XX, YY, abs(FR));
 axis([-1, 1, -1, 1, 0, 1.1]);
+xlabel('\omega_{12}/\pi');
+ylabel('\omega_3/\pi');
+zlabel('Magnitude response');
