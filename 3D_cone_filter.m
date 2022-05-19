@@ -83,4 +83,11 @@ h(NH+2 : N_h) = 0.5 * A(2:NH+1);
 %
 %
 subplot(2, 2, 1);
-
+FR = freqz(h, 1, 0:deltaw_pi : pi);
+plot(0:deltaw_pi/pi : 1, abs(FR));
+axis([0, 1, 0, 1, 1]);
+xlabel('Normalized frequency (\omega/\pi)');
+ylabel('Magnitude response');
+title('Prototype filter');
+%
+%
