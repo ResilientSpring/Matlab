@@ -51,6 +51,7 @@ ws = wp + wt;
 %
 NH = (N_h - 1) / 2;
 Nsam_p = round(wp / deltaw_pi);
+Nsam_s = round((pi - ws) / deltaw_pi);
 NV = (0 :NH)';
 %
 %
@@ -71,3 +72,15 @@ for iw = 0:Nsam_s
     Qs = Qs + cos(w * NV) * (cos(w * NV))';
     
 end
+Qs = (pi -ws) * Qs / (Nsam_p+1);
+%
+%
+A = -0.5 * inv(Qp + Qs) * P;
+h = zeros(N_h, 1);
+h(NH+1) = A(1);
+h(1:NH) = 0.5 * flipud(A(2:NH+1));
+h(NH+2 : N_h) = 0.5 * A(2:NH+1);
+%
+%
+subplot(2, 2, 1);
+
