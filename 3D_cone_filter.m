@@ -195,7 +195,7 @@ Qp = wp * Qp / (Nsam_p + 1);
 %
 Qs = zeros(NH+1, NH+1);
 
-for iw = 0:Nsams
+for iw = 0:Nsam_p
     w = ws + iw * deltaw_pi;
     Qs = Qs + cos(w * NV) * (cos(w*NV))';
 end
