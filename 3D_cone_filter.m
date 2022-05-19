@@ -202,3 +202,52 @@ end
 Qs = (pi - ws) * Qs / (Nsam_p+1);
 %
 %
+A = -0.5 * inv(Qp + Qs) * P;
+%
+%
+Ta_b = zeros(N+1, N+1);
+Ta_b(1, 1) = 1;
+Ta_b(2, 2) = 1;
+B_c = A(1) * Ta_b(1, :);
+B_c = B_c + A(2) * Ta_b(2, :);
+for in = 2:N
+    Ta_b(in+1, 2:in+1) = 2 * Ta_b(in, 1 : in);
+    Ta_b(in+1, 1:in+1) = Ta_b(in+1, 1 : in+1) - Ta_b(in-1, 1:in+1);
+    B_c = B_c + A(in + 1) * Ta_b(in+1, :);
+end
+%
+%
+F = zeros(3, 3);
+F(1, 1) = 0.25 * r11;
+F(1, 2) = 0.5 * r10;
+F(1, 3) = 0.25 * r11;
+F(2, 1) = 0.5 * r01;
+F(2, 2) = r00;
+F(2, 3) = 0.5 * r01;
+F(3, 1) = 0.25 * r11;
+F(3, 2) = 0.5 * r10;
+F(3, 3) = 0.25 * r11;
+%
+%
+h = zeros(2*N+1, 2*N+1);
+h(N+1, N+1) = B_c(1);
+h(N:N+2, N:N+2) = h(N:N+2, N:N+2) + B_c(2) * F;
+FN = F;
+for in = 2:N
+    FN = conv2(FN, F);
+    h(N+1-in:N+1+in, N+1-in:N+1+in) = h(N+1 - in:N+1+in, N+1-in:N+1+in) + B_c(in+1) * FN;
+end
+%
+%
+FR = freqz2(h, -1:2/100:1, -1:2/100:1);
+XX = zeros(101, 101);
+for i = 0:100
+    XX(:, i+1) = (-1:2/100:1)';
+end
+YY = XX';
+subplot(2, 2, 3);
+plot3(XX, YY, abs(FR));
+axis([-1, 1, -1, 1, 0, 1.1]);
+xlabel('\omega_1/\pi');
+ylabel('\omega_2/\pi');
+zlabel('Magnitude response');
