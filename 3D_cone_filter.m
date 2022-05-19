@@ -173,3 +173,32 @@ r01 = 0.5;
 % Design of prototype FIR lowpass filter
 %
 N_h = 2 * N + 1;
+wp = wc;
+ws = wp + wt;
+%
+%
+NH = (N_h - 1) / 2;
+Nsam_s = round((pi - ws) / deltaw_pi);
+NV = (0:NH)';
+%
+%
+P = zeros(NH+1, 1);
+Qp = zeros(NH+1, NH+1);
+for iw = 0:Nsam_p
+    w = iw * deltaw_pi;
+    P = P - 2*cos(w*NV);
+    Qp = Qp + cos(w*NV)*(cos(w*NV))';
+end
+
+P = wp*P / (Nsam_p + 1);
+Qp = wp * Qp / (Nsam_p + 1);
+%
+Qs = zeros(NH+1, NH+1);
+
+for iw = 0:Nsams
+    w = ws + iw * deltaw_pi;
+    Qs = Qs + cos(w * NV) * (cos(w*NV))';
+end
+Qs = (pi - ws) * Qs / (Nsam_p+1);
+%
+%
