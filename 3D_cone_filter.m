@@ -342,3 +342,35 @@ for i1 = 0:64
 end
 %
 %
+[F, V] = isosurface(XXX, YYY, ZZZ, abs(FR3), 0.98);
+%
+[rowV, colV] = size(V);
+%
+[Z1 ind] = sort(V(:, 3));
+X1 = V(ind, 1);
+Y1 = V(ind, 2);
+%
+Zu = Z1(rowV/2+1:rowV, 1);
+Xu = X1(rowV/2+1:rowV, 1);
+Yu = Y1(rowV/2+1:rowV, 1);
+Zd = Z1(1:rowV/2, 1);
+Xd = X1(1:rowV/2, 1);
+Yd = Y1(1:rowV/2, 1);
+%
+ti = -1:.0025:1;
+[XI, YI] = meshgrid(ti, ti);
+ZU = griddata(Xu, Yu, Zu, XI, YI);
+ZD = griddata(Xd, Yd, Zd, XI, YI);
+%
+subplot(2, 2, 4);
+contour3(XI, YI, ZU, 35, 'k');
+hold;
+contour3(XI, YI, ZD, 35, 'k');
+%
+view(3);
+xlabel('\omega_1 / \pi', 'FontSize', 16);
+set(gca, 'xtick', linspace(-1, 1, 5));
+ylabel('\omega_2 / \pi', 'FontSize', 16);
+set(gca, 'ytick', linspace(-1, 1, 5));
+zlabel('\omega_3 / \pi', 'FontSize', 16);
+set(gca, 'ztick', linspace(-1, 1, 5));
