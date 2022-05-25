@@ -326,18 +326,21 @@ for i1 = 0:64
     w1 = -pi + i1 * deltaw_3d;
 
     for i2 = 0:64
-        w3 = -pi + i3 * deltaw_3d;
-        XXX(i1+1, i2+2, i3+1) = w1/pi;
-        YYY(i1+1, i2+2, i3+1) = w2/pi;
-        ZZZ(i1+1, i2+2, i3+1) = w3/pi;
+        w2 = -pi + i2 * deltaw_3d;
+        for i3 = 0:64
+            w3 = -pi + i3 * deltaw_3d;
+            XXX(i1+1, i2+2, i3+1) = w1/pi;
+            YYY(i1+1, i2+2, i3+1) = w2/pi;
+            ZZZ(i1+1, i2+2, i3+1) = w3/pi;
 
-        for n1 = 0:N
-            for n2 = 0:N
-                for n3 = 0:N
-                    FR3(i1+1, i2+1, i3+1) = FR3(i1+1, i2+1, i3+1) + A3(n1+1, n2+1, n3+1) * cos(n1 * w1) * cos(n2 * w2) * cos(n3 * w3);
+            for n1 = 0:N
+                for n2 = 0:N
+                    for n3 = 0:N
+                        FR3(i1+1, i2+1, i3+1) = FR3(i1+1, i2+1, i3+1) + A3(n1+1, n2+1, n3+1) * cos(n1 * w1) * cos(n2 * w2) * cos(n3 * w3);
+                    end
                 end
             end
-        end
+        end        
     end
 end
 %
