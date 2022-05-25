@@ -326,7 +326,7 @@ for i1 = 0:64
     w1 = -pi + i1 * deltaw_3d;
 
     for i2 = 0:64
-        w3 = -pi * i3 * deltaw_3d;
+        w3 = -pi + i3 * deltaw_3d;
         XXX(i1+1, i2+2, i3+1) = w1/pi;
         YYY(i1+1, i2+2, i3+1) = w2/pi;
         ZZZ(i1+1, i2+2, i3+1) = w3/pi;
