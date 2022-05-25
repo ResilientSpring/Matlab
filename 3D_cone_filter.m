@@ -296,3 +296,49 @@ F(3, 3, 3) = 0.125 * t111;
 %
 h3 = zeros(2*N + 1, 2*N + 1, 2*N + 1);
 h3(N+1, N+1, N+1) = B(1);
+h3(N:N+2, N:N+2, N:N+2) = h3(N:N+2, N:N+2, N:N+2) + B(2) * F;
+FN = F;
+
+for in = 2:N
+    FN = convn(FN, F);
+    h3(N+1-in:N+1+in, N+1-in:N+1+in, N+1-in:N+1+in) = h3(N+1-in:N+1+in, N+1-in:N+1+in, N+1-in:N+1+in) + B(in+1) * FN;
+end
+%
+%
+A3 = h3(N+1:2*N+1, N+1:2*N+1, N+1:2*N+1);
+A3(2:N+1, 1, 1) = 2 * A3(2:N+1, 1, 1);
+A3(1, 2:N+1, 1) = 2 * A3(1, 2:N+1, 1);
+A3(1, 1, 2:N+1) = 2 * A3(1, 1, 2:N+1);
+A3(2:N+1, 2:N+1, 1) = 4 * A3(2:N+1, 2:N+1, 1);
+A3(2:N+1, 1, 2:N+1) = 4 * A3(2:N+1, 1, 2:N+1);
+A3(1, 2:N+1, 2:N+1) = 4 * A3(1, 2:N+1, 2:N+1);
+A3(2:N+1, 2:N+1, 2:N+1) = 8 * A3(2:N+1, 2:N+1, 2:N+1);
+%
+%
+deltaw_3d = pi / 32;
+FR3 = zeros(65, 65, 65);
+XXX = zeros(65, 65, 65);
+YYY = zeros(65, 65, 65);
+ZZZ = zeros(65, 65, 65);
+
+for i1 = 0:64
+    i1
+    w1 = -pi + i1 * deltaw_3d;
+
+    for i2 = 0:64
+        w3 = -pi * i3 * deltaw_3d;
+        XXX(i1+1, i2+2, i3+1) = w1/pi;
+        YYY(i1+1, i2+2, i3+1) = w2/pi;
+        ZZZ(i1+1, i2+2, i3+1) = w3/pi;
+
+        for n1 = 0:N
+            for n2 = 0:N
+                for n3 = 0:N
+                    FR3(i1+1, i2+1, i3+1) = FR3(i1+1, i2+1, i3+1) + A3(n1+1, n2+1, n3+1) * cos(n1 * w1) * cos(n2 * w2) * cos(n3 * w3);
+                end
+            end
+        end
+    end
+end
+%
+%
