@@ -131,9 +131,9 @@ pause;
 %
 % magnitude responses of subfilters
 %
-for im = 0:M
-    MRs = abs(freqz(h(:, im+1), 1, 0:pi/200:pi));
-    subplot(3, 3, im+1);
-    plot(0:1/200:1, MRs);
-    axis([0, 1, 0, 5]);
-end
+%for im = 0:M
+%    MRs = abs(freqz(h(:, im+1), 1, 0:pi/200:pi));
+%    subplot(3, 3, im+1);
+%    plot(0:1/200:1, MRs);
+%    axis([0, 1, 0, 5]);
+%end
