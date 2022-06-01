@@ -98,5 +98,41 @@ for ip = 0:pointp
     for im = 1:M
         hnp = hnp + h(:, im+1) * p ^ im;
     end
-    
+    MR(:, ip+1) = abs(freqz(hnp, 1, 0 : deltaw : wp));
+    GD(:, ip+1) = grpdelay(hnp, 1, 0:deltaw:wp);
+end
+%
+%
+XX = zeros(pointw + 1, pointp + 1);
+YY = zeros(pointw + 1, pointp + 1);
+
+for ip = 0:pointp
+    XX(:, ip+1) = (0:deltaw : wp) / pi';
+end
+
+for iw = 0:pointw
+    YY(iw + 1, :) = - 0.5 : deltap : 0.5;
+end
+%
+subplot(1, 2, 1);
+plot3(XX, YY, MR);
+axis([0, wp/pi, -0.5, 0.5, 0, 1.1]);
+xlabel('Frequency');
+ylabel('Variable p');
+zlabel('Magnitude response');
+subplot(1, 2, 2);
+plot3(XX, YY, GD);
+axis([0, wp / pi, -0.5, 0.5, NH-0.5, NH+0.5]);
+xlabel('Frequency');
+ylabel('Variable p');
+zlabel('Group-delay response');
+pause;
+%
+% magnitude responses of subfilters
+%
+for im = 0:M
+    MRs = abs(freqz(h(:, im+1), 1, 0:pi/200:pi));
+    subplot(3, 3, im+1);
+    plot(0:1/200:1, MRs);
+    axis([0, 1, 0, 5]);
 end
