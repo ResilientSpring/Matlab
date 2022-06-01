@@ -81,7 +81,7 @@ h(NH+1, 1) = 1;
 for im = 1:Mc
     h(NH+1, 2 * im + 1) = a2(1, im);
     h(1 : NH, 2 * im + 1) = 0.5 * a2(NH+1:-1:2, im);
-    h(NH + 2 : NH + 1, 2 * im + 1) = 0.5 * a2(2 : NH + 1, im);
+    h(NH + 2 : N + 1, 2 * im + 1) = 0.5 * a2(2 : NH + 1, im);
 end
 for im = 1:Ms
     h(1:NH, 2 * im) = 0.5 * b2(NH:-1:1, im);
