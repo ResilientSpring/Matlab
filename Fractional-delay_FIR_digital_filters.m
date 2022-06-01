@@ -58,6 +58,7 @@ for iw = 0:pointw
     w = iw * deltaw;
 
     for ip = 0:pointp
+        p = -0.5 + ip * deltap;
         s = zeros(nmb, 1);
         for is = 0:nmb - 1
             n = mod(is, NH) + 1;
