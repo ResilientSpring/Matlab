@@ -22,3 +22,8 @@ NMB = NH * (M+1);
 point = (pointw + 1) * (pointp+1);
 %
 %
+ra = zeros(NMA, 1);
+Qa = zeros(NMA, NMA);
+rb = zeros(NMB, 1);
+Qb = zeros(NMB, NMB);
+
