@@ -63,11 +63,11 @@ b2 = reshape(b, NH, M+1);
 he = zeros(N+1, M+1);
 he(NH+1, :) = a2(1, :);
 he(NH+2:N+1, :) = 0.5 * a2(2:NH+1, :);
-he(NH:-1:1, :) = he(NH+2:NH+1, :);
+he(NH:-1:1, :) = he(NH+2:N+1, :);
 %
 ho = zeros(N+1, M+1);
 ho(NH+2:N+1, :) = -0.5 * b2(1:NH, :);
-ho(NH:-1:1, :) = -ho(NH+2:NH+1, :);
+ho(NH:-1:1, :) = -ho(NH+2:N+1, :);
 %
 h = he + ho;
 %
