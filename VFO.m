@@ -26,4 +26,29 @@ ra = zeros(NMA, 1);
 Qa = zeros(NMA, NMA);
 rb = zeros(NMB, 1);
 Qb = zeros(NMB, NMB);
+for ip = 0:pointp
+    p = p1 + ip * deltap;
+    for iw = 0:pointw
+        w = w1 + iw * deltaw;
+        cwp = zeros(NMA, 1);
+        for inm = 0:NMA - 1
+            n = mod(inm, NH+1);
+            m = floor(inm/(NH+1));
+            cwp(inm+1) = p ^ m * cos(n * w);
+        end
+        ra = ra - 2 * w ^ p * cos(p * pi / 2) * cwp;
+        Qa = Qa + cwp * cwp';
+
+        swp = zeros(NMB, 1);
+        for inm = 0:NMB - 1
+            n = mod(inm, NH) + 1;
+            m = floor(inm / NH);
+            swp(inm + 1) = p ^ m * sin(n * w);
+        end
+        rb = rb - 2 * w ^ p * sin(p*pi/2) * swp;
+        Qb = Qb + swp * swp';
+    end
+end
+ra = (p2 - p1) * (w2 - w1) * ra / point;
+Qa = (p2 - p1) * (w2 - w1) * Qa / point;
 
