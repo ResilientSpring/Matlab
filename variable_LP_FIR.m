@@ -33,5 +33,20 @@ for iw = 0:sampling_w
             m = floor(inm/(NH+1));
             cwp(inm+1) = p^(m)*cos(n*w);
         end
+        if p >= (w-wp1)/(wp2-wp1)-0.5
+            sampling_pass = sampling_pass + 1;
+            ra = ra - 2 * cwp;
+            Qp = Qp + cwp*cwp';
+        elseif p <= (w - wp1 - wt) / (wp2 - wp1) -0.5
+            sampling_stop = sampling_stop + 1;
+            Qs = Qs +cwp*cwp';
+        else
+             
+        end
     end
 end
+ra = 0.5 * (wp1 + wp2) * ra / sampling_pass;
+Qp = 0.5 * (wp1 + wp2) * Qp / sampling_pass;
+Qs = 0.5 * (pi - wp1 - wt + pi - wp2 - wt) * Qs / sampling_stop;
+a = -0.5 * inv(Qp + Qs) * ra;
+a2 = reshape(a, NH+1, M+1);
