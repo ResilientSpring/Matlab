@@ -18,3 +18,6 @@ deltaw = pi / sampling_w;
 deltap = 1 / sampling_p;
 %
 %
+sampling_pass = 0;
+sampling_stop = 0;
+ra = zeros(nma, 1);
