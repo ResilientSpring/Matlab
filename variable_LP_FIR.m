@@ -50,3 +50,11 @@ Qp = 0.5 * (wp1 + wp2) * Qp / sampling_pass;
 Qs = 0.5 * (pi - wp1 - wt + pi - wp2 - wt) * Qs / sampling_stop;
 a = -0.5 * inv(Qp + Qs) * ra;
 a2 = reshape(a, NH+1, M+1);
+%
+%
+h = zeros(N+1, M+1);
+for im = 0:M
+    h(NH+1, im+1) = a2(1, im+1);
+    h(1:NH, im+1) = 0.5 * a2(NH+1:-1:2, im+1);
+    h(NH+2:N+1, im+1) = 0.5 * a2(2:NH+1, im+1);
+end
