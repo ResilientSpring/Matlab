@@ -58,3 +58,31 @@ for im = 0:M
     h(1:NH, im+1) = 0.5 * a2(NH+1:-1:2, im+1);
     h(NH+2:N+1, im+1) = 0.5 * a2(2:NH+1, im+1);
 end
+%
+%
+MR = zeros(sampling_w+1, sampling_p+1);
+for ip = 0:sampling_p
+    p = -0.5 +  ip * deltap;
+    h1 = h(:, 1);
+    for im = 1:M
+        h1 = h1 + p^im*h(:, im+1);
+    end
+    MR(:, ip+1) = abs(freqz(h1, 1, 0:deltaw:pi));
+end
+XX = zeros(sampling_w+1, sampling_p+1);
+YY = zeros(sampling_w+1, sampling_p+1);
+for nw = 0:sampling_w
+    w = nw * deltaw;
+    XX(nw+1, :) = (w/pi)*ones(1, sampling_p+1);
+end
+for np = 0:sampling_p
+    p = -0.5 + np * deltap;
+    YY(:, np+1) = p*ones(sampling_w+1, 1);    
+end
+
+close all;
+plot3(XX, YY, MR);
+axis([0, 1, -0.5, 0.5, 0, 1.1]);
+xlabel('Normalized frequency (\omega/\pi');
+ylabel('Variable p');
+zlabel('Magnitude response');
